@@ -3,7 +3,12 @@
 		<h1>listcord 📝</h1>
 		<span>Create and paste lists for Discord</span>
 
-		<text-list v-model="message" />
+		<div class="mx-auto justify-content-center" style="max-width: 512px">
+		<text-list v-model="message"/>
+
+		<!-- debug message list -->
+		<textarea :value="message" disabled class="my-3" style="width: 100%; height: 150px;"></textarea>
+		</div>
 
 		<foot />
 	</div>
@@ -31,5 +36,6 @@ export default {
 #app {
 	text-align: center;
 	margin-top: 60px;
+	padding: 0px 12px
 }
 </style>
