@@ -1,12 +1,12 @@
 <template>
-	<li class="list-group-item" @click="editing = true; $nextTick(() => $refs.input.focus())">
+	<li class="list-group-item" @click="onClick">
 		<div v-show="!editing">{{ value }}</div>
 		<input 
 			ref="input"
 			v-show="editing"
 			:value="value" 
 			@input="$emit('input', $event.target.value)"
-			@focus="editing=true"
+			@focus="onFocus"
 			@blur="editing=false"
 			@keydown="keyDown"
 		>
@@ -34,6 +34,15 @@ export default {
 			}
 
 			this.$emit('keydown', event)
+		},
+		onClick(event) {
+			this.editing = true; 
+			this.$nextTick(() => this.$refs.input.focus())
+			this.$emit('click', event);
+		},
+		onFocus(event) {
+			this.editing = true;
+			setTimeout(() => event.target.select(), 50)
 		}
 	}
 }

@@ -2,13 +2,17 @@
 	<div>
 		<ul class="list-group" v-sortable="{onUpdate: onListUpdate}">
 			<list-item 
-				class="list-group-item" 
+				:class="{
+					'list-group-item': true, 
+					'list-group-item-action': true,
+					'list-group-item-primary': selected === i
+				}" 
 				v-for="(v,i) in list" 
 				:ref="v.uuid"
 				:key="v.uuid" 
 				:value="v.text"
 				@input="onItemUpdate(i, $event)"
-				@keydown="itemKeyDown(i, $event)"
+				@click="selected=i"
 			/>
 		</ul>
 
@@ -35,11 +39,13 @@ export default {
 	},
 	data() {
 		return {
-			list: []
+			list: [],
+			selected: 0
 		}
 	},
 	created() {
 		this.updateList(this.value)
+		window.addEventListener('keydown', this.keyDown);
 	},
 	watch: {
 		value(val) { this.updateList(val) }
@@ -53,28 +59,29 @@ export default {
 		removeItem(i) {
 			this.list.splice(i, 1)
 		},
-		itemKeyDown(i, event) {
+		keyDown(event) {
 			console.log(event.code)
 			switch(event.code) {
 				case 'Enter': 
-					this.addItem(i)
+					this.addItem(this.selected)
 					break;
 				case 'Backspace': 
-					if(event.target.value === '') 
-						this.removeItem(i)
+					if(this.list[this.selected].text === '') 
+						this.removeItem(this.selected)
 					break;
 				case 'ArrowDown':
-					this.moveSelection(i, 1)
+					this.moveSelection(1)
 					break;
 				case 'ArrowUp':
-					this.moveSelection(i, -1)
+					this.moveSelection(-1)
 					break;
 			}
 		},
-		moveSelection(i, amt) {
-			var next = mod((i + amt), this.list.length);
-			this.$refs[this.list[i].uuid][0].$el.blur()
+		moveSelection(amt) {
+			var next = mod((this.selected + amt), this.list.length);
+			this.$refs[this.list[this.selected].uuid][0].$el.blur()
 			this.$refs[this.list[next].uuid][0].$el.click()
+			this.selected = next;
 		},
 		onListUpdate(event) {
 			var list = this.list
