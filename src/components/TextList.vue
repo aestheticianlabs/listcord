@@ -17,10 +17,6 @@
 				@picker-hidden="_pickerHidden"
 			/>
 		</ul>
-
-		<b-button variant="primary" @click="addItem" >
-			<b-icon icon="plus" />
-		</b-button>
 	</div>
 </template>
 
