@@ -58,12 +58,6 @@ export default {
 			this.$emit('hidden', event)
 			this.shown = false
 		},
-		_onKeyDown(event) {
-			if(this.shown) {
-				event.preventDefault()
-				return false
-			}
-		}
 	}
 }
 </script>
