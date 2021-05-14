@@ -4,10 +4,30 @@
 		<span>Create and paste lists for Discord</span>
 
 		<div class="mx-auto justify-content-center" style="max-width: 512px">
-		<text-list v-model="message"/>
+			<text-list v-model="message"/>
 
-		<!-- debug message list -->
-		<textarea :value="text" disabled class="my-3" style="width: 100%; height: 150px;"></textarea>
+			<!-- debug message list -->
+			<textarea 
+				:value="text" 
+				disabled 
+				class="my-3" 
+				style="width: 100%; height: 150px;"
+			/>
+
+			<b-button 
+				id="btn-copy"
+				variant="outline-primary"
+				@click="copyMessage"
+			>
+				Copy message
+			</b-button>
+			<b-tooltip
+				target="btn-copy"
+				:show.sync="showTooltip"
+				title="Copied!"
+				triggers
+				@shown="setTooltipTimeout"
+			/>
 		</div>
 
 		<foot />
@@ -32,6 +52,7 @@ export default {
 				{ text: "this" },
 				{ text: "list" }
 			],
+			showTooltip: false
 		}
 	},
 	computed: {
@@ -43,6 +64,15 @@ export default {
 					return str
 				})
 				.join('\n')
+		}
+	},
+	methods: {
+		copyMessage() {
+			navigator.clipboard.writeText(this.text)
+			this.showTooltip = true
+		},
+		setTooltipTimeout() {
+			setTimeout(() => { this.showTooltip = false }, 1000)
 		}
 	}
 }
