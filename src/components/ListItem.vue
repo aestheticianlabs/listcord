@@ -1,5 +1,10 @@
 <template>
 	<li class="list-group-item" @click="onClick">
+		<emoji-dropdown 
+			ref="picker" 
+			@shown="$emit('picker-shown', $event)"
+			@hidden="$emit('picker-hidden', $event)"
+		/>
 		<div v-show="!editing">{{ value }}</div>
 		<input 
 			ref="input"
@@ -14,7 +19,13 @@
 </template>
 
 <script>
+import EmojiDropdown from './EmojiDropdown.vue'
+
 export default {
+  components: { EmojiDropdown },
+	comopnents: {
+		EmojiDropdown
+	},
 	props: {
 		value: {
 			require: true,
@@ -22,7 +33,7 @@ export default {
 	},
 	data() {
 		return {
-			editing: false
+			editing: false,
 		}
 	},
 	methods: {
@@ -36,6 +47,11 @@ export default {
 			this.$emit('keydown', event)
 		},
 		onClick(event) {
+			if (this.$refs.picker.$el.contains(event.target)) {
+				event.stopPropagation()
+				return
+			}
+
 			this.editing = true; 
 			this.$nextTick(() => this.$refs.input.focus())
 			this.$emit('click', event);

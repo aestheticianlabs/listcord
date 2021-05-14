@@ -13,6 +13,8 @@
 				:value="v.text"
 				@input="onItemUpdate(i, $event)"
 				@click="selected=i"
+				@picker-shown="keysEnabled=false"
+				@picker-hidden="_pickerHidden"
 			/>
 		</ul>
 
@@ -40,7 +42,8 @@ export default {
 	data() {
 		return {
 			list: [],
-			selected: 0
+			selected: 0,
+			keysEnabled: true
 		}
 	},
 	created() {
@@ -60,7 +63,8 @@ export default {
 			this.list.splice(i, 1)
 		},
 		keyDown(event) {
-			console.log(event.code)
+			if(!this.keysEnabled) return;
+
 			switch(event.code) {
 				case 'Enter': 
 					this.addItem(this.selected)
@@ -98,8 +102,7 @@ export default {
 			this.$emit('input', newList.map(v => v.text).join('\n'))
 		},
 		updateList(val) {
-			var newList = val.split('\n')
-				.map(t => ({ text: t }))
+			var newList = val.split('\n').map(t => ({ text: t }))
 
 			for (var i = 0; i < newList.length; i++) {
 				// keep uuids for unchanged list items
@@ -114,6 +117,9 @@ export default {
 			}
 			
 			this.list = newList
+		},
+		_pickerHidden() {
+			setTimeout(() => this.keysEnabled = true, 50)
 		}
 	}
 }
