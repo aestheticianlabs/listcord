@@ -7,7 +7,7 @@
 			@hidden="$emit('picker-hidden', $event)"
 			@select="_onEmojiSelect"
 		/>
-		<div v-show="!editing">{{ value.text }}</div>
+		<div v-show="!editing" v-html="formattedText"></div>
 		<input 
 			ref="input"
 			v-show="editing"
@@ -23,6 +23,9 @@
 <script>
 import EmojiDropdown from './EmojiDropdown.vue'
 
+const boldRegex = /\*\*(.*)\*\*/g
+const underlineRegex = /__(.*)__/g
+
 export default {
   components: { EmojiDropdown },
 	comopnents: {
@@ -36,6 +39,13 @@ export default {
 	data() {
 		return {
 			editing: false,
+		}
+	},
+	computed: {
+		formattedText() {
+			return this.value.text
+				.replace(boldRegex, "<b>$1</b>")
+				.replace(underlineRegex, "<u>$1</u>")
 		}
 	},
 	methods: {
@@ -65,7 +75,7 @@ export default {
 			this.$emit('keydown', event)
 		},
 		_toggleBold() {
-			let result = this.value.text.replace(/\*\*(.*)\*\*/g, "$1")
+			let result = this.value.text.replace(boldRegex, "$1")
 			if (result !== this.value.text) {
 				this.value.text = result
 			} else {
@@ -73,7 +83,7 @@ export default {
 			}
 		},
 		_toggleUnderline() {
-			let result = this.value.text.replace(/__(.*)__/g, "$1")
+			let result = this.value.text.replace(underlineRegex, "$1")
 			if (result !== this.value.text) {
 				this.value.text = result
 			} else {

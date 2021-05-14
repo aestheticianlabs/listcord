@@ -47,7 +47,7 @@ export default {
 	data() {
 		return {
 			message: [
-				{ text: "Check" },
+				{ text: "**__Check__**" },
 				{ text: "out" },
 				{ text: "this" },
 				{ text: "list" }

@@ -11,6 +11,7 @@ Vue.directive('sortable', {
 		new Sortable(el, binding.value || {})
 	}
 })
+
 Vue.use(BootstrapVue)
 Vue.use(BootstrapVueIcons)
 
