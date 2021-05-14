@@ -11,7 +11,7 @@
 		</template>
 		<emoji-picker 
 			ref="picker"
-			:emoji="emoji.id"
+			:emoji="emoji ? emoji.id : undefined"
 			:data="emojiIndex"
 			:native="true" 
 			:autoFocus="true" 
