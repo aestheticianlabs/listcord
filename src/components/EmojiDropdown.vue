@@ -11,6 +11,7 @@
 		</template>
 		<emoji-picker 
 			ref="picker"
+			:emoji="emoji.id"
 			:data="emojiIndex"
 			:native="true" 
 			:autoFocus="true" 
@@ -29,9 +30,11 @@ export default {
 	components: {
 		EmojiPicker
 	},
+	props: {
+		emoji: null
+	},
 	data() {
 		return {
-			emoji: null,
 			emojiIndex: new EmojiIndex(data),
 			shown: false
 		}

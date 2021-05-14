@@ -2,6 +2,7 @@
 	<li class="list-group-item" @click="onClick">
 		<emoji-dropdown 
 			ref="picker" 
+			:emoji="value.emoji"
 			@shown="$emit('picker-shown', $event)"
 			@hidden="$emit('picker-hidden', $event)"
 			@select="_onEmojiSelect"
