@@ -40,13 +40,45 @@ export default {
 	},
 	methods: {
 		keyDown(event) {
-			switch(event.code) {
-				case 'Escape':
-					this.$refs.input.blur();
-					break;
+			console.log(event)
+
+			if (event.metaKey) {
+				switch(event.code) {
+					case 'KeyB':
+						// bold
+						this._toggleBold()
+						break;
+					case 'KeyU':
+						// underline
+						this._toggleUnderline()
+						break;
+				}
+			}
+			else {
+				switch(event.code) {
+					case 'Escape':
+						this.$refs.input.blur();
+						break;
+				}
 			}
 
 			this.$emit('keydown', event)
+		},
+		_toggleBold() {
+			let result = this.value.text.replace(/\*\*(.*)\*\*/g, "$1")
+			if (result !== this.value.text) {
+				this.value.text = result
+			} else {
+				this.value.text = `**${this.value.text}**`
+			}
+		},
+		_toggleUnderline() {
+			let result = this.value.text.replace(/__(.*)__/g, "$1")
+			if (result !== this.value.text) {
+				this.value.text = result
+			} else {
+				this.value.text = `__${this.value.text}__`
+			}
 		},
 		onClick(event) {
 			if (this.$refs.picker.$el.contains(event.target)) {
