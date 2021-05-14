@@ -86,6 +86,7 @@ export default {
 		onListUpdate(event) {
 			var list = this.list
 			list.splice(event.newIndex, 0, list.splice(event.oldIndex, 1)[0])
+			this.selected = event.newIndex
 			this.notifyInput(list)
 		},
 		onItemUpdate(i, val) {
