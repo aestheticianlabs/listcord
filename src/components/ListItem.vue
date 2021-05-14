@@ -1,22 +1,39 @@
 <template>
-	<li class="list-group-item" @click="onClick">
-		<emoji-dropdown 
-			ref="picker" 
-			:emoji="value.emoji"
-			@shown="$emit('picker-shown', $event)"
-			@hidden="$emit('picker-hidden', $event)"
-			@select="_onEmojiSelect"
-		/>
-		<div v-show="!editing" v-html="formattedText"></div>
-		<input 
-			ref="input"
-			v-show="editing"
-			:value="value.text" 
-			@input="_onInput"
-			@focus="onFocus"
-			@blur="editing=false"
-			@keydown="keyDown"
-		>
+	<li 
+		:class="{
+			'list-group-item': true,
+			'z-3000': pickerOpen
+		}" 
+		@click="onClick"
+	>
+		<div class="input-group">
+			<div class="input-group-prepend">
+				<emoji-dropdown 
+					ref="picker" 
+					:emoji="value.emoji"
+					@shown="_pickerShown"
+					@hidden="_pickerHidden"
+					@select="_onEmojiSelect"
+				/>
+			</div>
+			<div class="form-control">
+				<span 
+					v-show="!editing" 
+					v-html="formattedText"
+				></span>
+				<input 
+					ref="input"
+					:style="{
+						'display': editing ? 'inline' : 'none'
+					}"
+					:value="value.text" 
+					@input="_onInput"
+					@focus="onFocus"
+					@blur="editing=false"
+					@keydown="keyDown"
+				>
+			</div>
+		</div>
 	</li>
 </template>
 
@@ -39,6 +56,7 @@ export default {
 	data() {
 		return {
 			editing: false,
+			pickerOpen: false
 		}
 	},
 	computed: {
@@ -111,6 +129,14 @@ export default {
 		_onEmojiSelect(emoji) {
 			this.value.emoji = emoji
 			this.$emit('input', this.value)
+		},
+		_pickerShown(event) {
+			this.pickerOpen = true
+			this.$emit('picker-shown', event)
+		},
+		_pickerHidden(event) {
+			this.pickerOpen = false
+			this.$emit('picker-hidden', event)
 		}
 	}
 }
@@ -125,5 +151,9 @@ input {
 	width: 100%;
 	padding: 0;
 	border: none;
+}
+
+.z-3000 {
+	z-index: 3000 !important;
 }
 </style>
