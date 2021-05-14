@@ -22,6 +22,10 @@
 import ListItem from './ListItem.vue'
 import { v4 as uuidv4 } from 'uuid'
 
+function mod(n, m) {
+	return ((n % m) + m) % m;
+}
+
 export default {
 	components: { ListItem },
 	props: {
@@ -59,7 +63,18 @@ export default {
 					if(event.target.value === '') 
 						this.removeItem(i)
 					break;
+				case 'ArrowDown':
+					this.moveSelection(i, 1)
+					break;
+				case 'ArrowUp':
+					this.moveSelection(i, -1)
+					break;
 			}
+		},
+		moveSelection(i, amt) {
+			var next = mod((i + amt), this.list.length);
+			this.$refs[this.list[i].uuid][0].$el.blur()
+			this.$refs[this.list[next].uuid][0].$el.click()
 		},
 		onListUpdate(event) {
 			var list = this.list
