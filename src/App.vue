@@ -7,7 +7,7 @@
 		<text-list v-model="message"/>
 
 		<!-- debug message list -->
-		<textarea :value="message" disabled class="my-3" style="width: 100%; height: 150px;"></textarea>
+		<textarea :value="text" disabled class="my-3" style="width: 100%; height: 150px;"></textarea>
 		</div>
 
 		<foot />
@@ -26,9 +26,25 @@ export default {
 	},
 	data() {
 		return {
-			message: "Check\nout\nthis\nlist!",
+			message: [
+				{ text: "Check" },
+				{ text: "out" },
+				{ text: "this" },
+				{ text: "list" }
+			],
 		}
 	},
+	computed: {
+		text() {
+			return this.message
+				.map(v => {
+					let str = v.text
+					if(v.emoji) str = `${v.emoji.native} ${str}`
+					return str
+				})
+				.join('\n')
+		}
+	}
 }
 </script>
 

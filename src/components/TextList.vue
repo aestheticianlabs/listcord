@@ -10,7 +10,7 @@
 				v-for="(v,i) in list" 
 				:ref="v.uuid"
 				:key="v.uuid" 
-				:value="v.text"
+				:value="v"
 				@input="onItemUpdate(i, $event)"
 				@click="selected=i"
 				@picker-shown="keysEnabled=false"
@@ -94,15 +94,14 @@ export default {
 			this.notifyInput(list)
 		},
 		onItemUpdate(i, val) {
-			var list = this.list
-			list[i].text = val
-			this.notifyInput(list)
+			this.$set(this.list, i, val)
+			this.notifyInput(this.list)
 		},
 		notifyInput(newList) {
-			this.$emit('input', newList.map(v => v.text).join('\n'))
+			this.$emit('input', newList)
 		},
 		updateList(val) {
-			var newList = val.split('\n').map(t => ({ text: t }))
+			let newList = val
 
 			for (var i = 0; i < newList.length; i++) {
 				// keep uuids for unchanged list items

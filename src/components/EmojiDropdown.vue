@@ -43,15 +43,14 @@ export default {
 		_onSelect(emoji) {
 			this.emoji = emoji
 			this.$refs.dropdown.hide(false)
+			this.$emit('select', emoji)
 		},
 		_onShown(event) {
-			console.log("shown")
 			this.$refs.picker.$refs.search.$el.firstChild.focus()
 			this.$emit('shown', event)
 			this.shown = true
 		},
 		_onHidden(event) {
-			console.log("hidden")
 			this.$emit('hidden', event)
 			this.shown = false
 		},

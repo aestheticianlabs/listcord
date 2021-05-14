@@ -4,13 +4,14 @@
 			ref="picker" 
 			@shown="$emit('picker-shown', $event)"
 			@hidden="$emit('picker-hidden', $event)"
+			@select="_onEmojiSelect"
 		/>
-		<div v-show="!editing">{{ value }}</div>
+		<div v-show="!editing">{{ value.text }}</div>
 		<input 
 			ref="input"
 			v-show="editing"
-			:value="value" 
-			@input="$emit('input', $event.target.value)"
+			:value="value.text" 
+			@input="_onInput"
 			@focus="onFocus"
 			@blur="editing=false"
 			@keydown="keyDown"
@@ -59,6 +60,14 @@ export default {
 		onFocus(event) {
 			this.editing = true;
 			setTimeout(() => event.target.select(), 50)
+		},
+		_onInput(event) {
+			this.value.text = event.target.value
+			this.$emit('input', this.value)
+		},
+		_onEmojiSelect(emoji) {
+			this.value.emoji = emoji
+			this.$emit('input', this.value)
 		}
 	}
 }
