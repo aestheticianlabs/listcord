@@ -1,13 +1,21 @@
 <template>
-	<ul class="list-group" v-sortable="{onUpdate: onListUpdate}">
-		<list-item 
-			class="list-group-item" 
-			v-for="(v,i) in list" 
-			:key="v.uuid" 
-			:value="v.text"
-			@input="onItemUpdate(i, $event)"
-		/>
-	</ul>
+	<div>
+		<ul class="list-group" v-sortable="{onUpdate: onListUpdate}">
+			<list-item 
+				class="list-group-item" 
+				v-for="(v,i) in list" 
+				:ref="v.uuid"
+				:key="v.uuid" 
+				:value="v.text"
+				@input="onItemUpdate(i, $event)"
+				@keydown="itemKeyDown(i, $event)"
+			/>
+		</ul>
+
+		<b-button variant="primary" @click="addItem" >
+			<b-icon icon="plus" />
+		</b-button>
+	</div>
 </template>
 
 <script>
@@ -33,6 +41,26 @@ export default {
 		value(val) { this.updateList(val) }
 	},
 	methods: {
+		addItem(i) {
+			var item = { text: "", uuid: uuidv4() }
+			this.list.splice(i + 1, 0, item)
+			this.$nextTick(() => { this.$refs[item.uuid][0].$el.click() })
+		},
+		removeItem(i) {
+			this.list.splice(i, 1)
+		},
+		itemKeyDown(i, event) {
+			console.log(event.code)
+			switch(event.code) {
+				case 'Enter': 
+					this.addItem(i)
+					break;
+				case 'Backspace': 
+					if(event.target.value === '') 
+						this.removeItem(i)
+					break;
+			}
+		},
 		onListUpdate(event) {
 			var list = this.list
 			list.splice(event.newIndex, 0, list.splice(event.oldIndex, 1)[0])

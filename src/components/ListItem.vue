@@ -8,6 +8,7 @@
 			@input="$emit('input', $event.target.value)"
 			@focus="editing=true"
 			@blur="editing=false"
+			@keydown="keyDown"
 		>
 	</li>
 </template>
@@ -22,6 +23,17 @@ export default {
 	data() {
 		return {
 			editing: false
+		}
+	},
+	methods: {
+		keyDown(event) {
+			switch(event.code) {
+				case 'Escape':
+					this.$refs.input.blur();
+					break;
+			}
+
+			this.$emit('keydown', event)
 		}
 	}
 }
