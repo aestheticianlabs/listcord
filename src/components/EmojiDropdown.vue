@@ -7,12 +7,12 @@
 	>
 		<template #button-content>
 			<b-icon icon="emoji-smile" v-if="!emoji" />
-			<span v-if="emoji"> {{ emoji.native }} </span>
+			<span v-if="emojiInternal"> {{ emojiInternal.native }} </span>
 		</template>
 		<emoji-picker 
 			ref="picker"
 			style="z-index: 100"
-			:emoji="emoji ? emoji.id : undefined"
+			:emoji="emojiInternal ? emojiInternal.id : undefined"
 			:data="emojiIndex"
 			:native="true" 
 			:autoFocus="true" 
@@ -36,16 +36,20 @@ export default {
 	},
 	data() {
 		return {
+			emojiInternal: null,
 			emojiIndex: new EmojiIndex(data),
 			shown: false
 		}
 	},
+	watch: {
+		emoji(val) { this.emojiInternal = val }
+	},
 	created() {
-		window.addEventListener('keydown', this._onKeyDown)
+		this.emojiInternal = this.emoji
 	},
 	methods: {
 		_onSelect(emoji) {
-			this.emoji = emoji
+			this.emojiInternal = emoji
 			this.$refs.dropdown.hide(false)
 			this.$emit('select', emoji)
 		},

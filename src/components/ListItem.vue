@@ -99,6 +99,7 @@ export default {
 			} else {
 				this.value.text = `**${this.value.text}**`
 			}
+			this.$emit('input', this.value)
 		},
 		_toggleUnderline() {
 			let result = this.value.text.replace(underlineRegex, "$1")
@@ -107,6 +108,7 @@ export default {
 			} else {
 				this.value.text = `__${this.value.text}__`
 			}
+			this.$emit('input', this.value)
 		},
 		onClick(event) {
 			if (this.$refs.picker.$el.contains(event.target)) {

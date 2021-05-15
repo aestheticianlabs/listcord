@@ -55,6 +55,11 @@ export default {
 			showTooltip: false
 		}
 	},
+	created() {
+		if (localStorage.message) {
+			this.message = JSON.parse(localStorage.message)
+		}
+	},
 	computed: {
 		text() {
 			return this.message
@@ -64,6 +69,11 @@ export default {
 					return str
 				})
 				.join('\n')
+		}
+	},
+	watch: {
+		message(val) {
+			localStorage.message = JSON.stringify(val)
 		}
 	},
 	methods: {
