@@ -32,7 +32,7 @@
 
 			<!-- instructions -->
 			<div id="instructions" class="my-2">
-				<p><b>&#9650;</b>/<b>&#9660;</b> or <b>H</b>/<b>J</b> for navigation.</p>
+				<p><b>&#9650;</b>/<b>&#9660;</b> or <b>K</b>/<b>J</b> for navigation.</p>
 				<p><b>Enter</b> to edit text or add a new line. <b>Esc</b> to stop editing.</p>
 				<p><b><meta-key />B</b> to embolden line, <b><meta-key />U</b> to underline.</p>
 				<p><b>Backspace</b> on an empty line to remove.</p>
