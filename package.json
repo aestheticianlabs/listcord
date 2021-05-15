@@ -39,7 +39,9 @@
     "parserOptions": {
       "parser": "babel-eslint"
     },
-    "rules": {}
+    "rules": {
+      "no-fallthrough": ["error", { "commentPattern": "break[\\s\\w]*omitted" }]
+    }
   },
   "browserslist": [
     "> 1%",

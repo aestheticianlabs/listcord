@@ -5,12 +5,16 @@
 			'z-3000': pickerOpen
 		}" 
 		@click="onClick"
+		@focus="$emit('focus', $event)"
+		@keydown="keyDown"
+		tabindex="0"
 	>
 		<div class="input-group">
 			<div class="input-group-prepend">
 				<emoji-dropdown 
 					ref="picker" 
 					:emoji="value.emoji"
+					@focus="$emit('focus', $event)"
 					@shown="_pickerShown"
 					@hidden="_pickerHidden"
 					@select="_onEmojiSelect"
@@ -30,7 +34,6 @@
 					@input="_onInput"
 					@focus="onFocus"
 					@blur="editing=false"
-					@keydown="keyDown"
 				>
 			</div>
 		</div>
@@ -68,7 +71,7 @@ export default {
 	},
 	methods: {
 		keyDown(event) {
-			console.log(event)
+			if(event.target === this.$refs.picker.$refs.searchInput) return;
 
 			if (event.metaKey) {
 				switch(event.code) {
@@ -82,10 +85,22 @@ export default {
 						break;
 				}
 			}
-			else {
+			else if (!this.editing) {
 				switch(event.code) {
+					case 'Enter':
+						event.stopPropagation()
+						this.$el.click()
+						return
+					case 'KeyE':
+						this.$refs.picker.$refs.dropdown.show()
+						break;
+				}
+			}
+			else {
+				switch (event.code) {
 					case 'Escape':
-						this.$refs.input.blur();
+						this.$refs.input.blur()
+						this.$el.focus()
 						break;
 				}
 			}
@@ -137,6 +152,7 @@ export default {
 			this.$emit('picker-shown', event)
 		},
 		_pickerHidden(event) {
+			this.$el.focus()
 			this.pickerOpen = false
 			this.$emit('picker-hidden', event)
 		}

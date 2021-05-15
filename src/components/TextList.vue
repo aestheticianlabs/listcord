@@ -12,7 +12,8 @@
 				:key="v.uuid" 
 				:value="v"
 				@input="onItemUpdate(i, $event)"
-				@click="selected=i"
+				@focus="_setSelected(i, false, false)"
+				@click="_setSelected(i, false, false)"
 				@picker-shown="keysEnabled=false"
 				@picker-hidden="_pickerHidden"
 			/>
@@ -57,31 +58,62 @@ export default {
 		},
 		removeItem(i) {
 			this.list.splice(i, 1)
+			this.moveSelection(-1, false)
 		},
 		keyDown(event) {
 			if(!this.keysEnabled) return;
 
+			var component = this._getSelectedComponent()
+
 			switch(event.code) {
 				case 'Enter': 
-					this.addItem(this.selected)
+					if (component.editing) {
+						this.addItem(this.selected)
+					}
 					break;
 				case 'Backspace': 
 					if(this.list[this.selected].text === '') 
 						this.removeItem(this.selected)
 					break;
+				case 'KeyJ':
+					if (!component.editing) {
+						this.moveSelection(1)
+					}
+					break;
 				case 'ArrowDown':
-					this.moveSelection(1)
+					this.moveSelection(1, true)
+					break;
+				case 'KeyK':
+					if (!component.editing) {
+						this.moveSelection(-1)
+					}
 					break;
 				case 'ArrowUp':
-					this.moveSelection(-1)
+					this.moveSelection(-1, true)
 					break;
 			}
 		},
-		moveSelection(amt) {
+		_getComponent(i) {
+			return this.$refs[this.list[i].uuid][0]
+		},
+		_getSelectedComponent() {
+			return this._getComponent(this.selected)
+		},
+		moveSelection(amt, click = false) {
 			var next = mod((this.selected + amt), this.list.length);
-			this.$refs[this.list[this.selected].uuid][0].$el.blur()
-			this.$refs[this.list[next].uuid][0].$el.click()
-			this.selected = next;
+			this._setSelected(next, click)
+		},
+		_setSelected(i, click = false, focus = true) {
+			this._getSelectedComponent().$el.blur()
+
+			if (click) {
+				this._getComponent(i).$el.click()
+			}
+			else if (focus) {
+				this._getComponent(i).$el.focus()
+			}
+
+			this.selected = i;
 		},
 		onListUpdate(event) {
 			var list = this.list

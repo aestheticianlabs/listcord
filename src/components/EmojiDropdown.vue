@@ -51,6 +51,9 @@ export default {
 	mounted() {
 		this.$refs.searchInput = this.$refs.picker.$refs.search.$el.firstChild
 		this.$refs.searchInput.addEventListener('keydown', this._keyDown)
+		this.$refs.dropdown.$refs.toggle.addEventListener(
+			'focus', (e) => this.$emit('focus', e)
+		)
 	},
 	methods: {
 		_onSelect(emoji) {
