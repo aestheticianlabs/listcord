@@ -47,6 +47,9 @@ export default {
 		this.updateList(this.value)
 		window.addEventListener('keydown', this.keyDown);
 	},
+	mounted() {
+		this._setSelected(this.selected, false, true)
+	},
 	watch: {
 		value(val) { this.updateList(val) }
 	},
@@ -104,7 +107,9 @@ export default {
 			this._setSelected(next, click)
 		},
 		_setSelected(i, click = false, focus = true) {
-			this._getSelectedComponent().$el.blur()
+			if (i != this.selected) {
+				this._getSelectedComponent().$el.blur()
+			}
 
 			if (click) {
 				this._getComponent(i).$el.click()
