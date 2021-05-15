@@ -17,6 +17,7 @@
 			:native="true" 
 			:autoFocus="true" 
 			@select="_onSelect" 
+			@keydown="_keyDown"
 		/>
 	</b-dropdown>
 </template>
@@ -47,6 +48,10 @@ export default {
 	created() {
 		this.emojiInternal = this.emoji
 	},
+	mounted() {
+		this.$refs.searchInput = this.$refs.picker.$refs.search.$el.firstChild
+		this.$refs.searchInput.addEventListener('keydown', this._keyDown)
+	},
 	methods: {
 		_onSelect(emoji) {
 			this.emojiInternal = emoji
@@ -54,7 +59,7 @@ export default {
 			this.$emit('select', emoji)
 		},
 		_onShown(event) {
-			this.$refs.picker.$refs.search.$el.firstChild.focus()
+			this.$refs.searchInput.focus()
 			this.$emit('shown', event)
 			this.shown = true
 		},
@@ -62,6 +67,15 @@ export default {
 			this.$emit('hidden', event)
 			this.shown = false
 		},
+		_keyDown(event) {
+			switch(event.code) {
+				case 'Backspace':
+					if (this.$refs.searchInput.value === '') {
+						this._onSelect(null)
+					}
+					break;
+			}
+		}
 	}
 }
 </script>
