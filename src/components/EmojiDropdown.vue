@@ -108,7 +108,7 @@ export default {
 </script>
 
 <style>
-img.emoji {
+.dropdown-toggle img.emoji {
 	width: 20px;
 	height: 20px;
 	vertical-align: text-bottom;

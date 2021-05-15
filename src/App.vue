@@ -55,6 +55,7 @@
 import Foot from "./components/Foot.vue"
 import TextList from './components/TextList.vue'
 import MetaKey from './components/MetaKey.vue'
+import twemoji from 'twemoji'
 
 export default {
 	name: 'App',
@@ -74,13 +75,6 @@ export default {
 			showTooltip: false
 		}
 	},
-	created() {
-		if (localStorage.message) {
-			this.message = JSON.parse(localStorage.message)
-		}
-
-		window.addEventListener('keydown', this._keyDown)
-	},
 	computed: {
 		text() {
 			return this.message
@@ -92,6 +86,16 @@ export default {
 				.join('\n')
 		}
 	},
+	created() {
+		if (localStorage.message) {
+			this.message = JSON.parse(localStorage.message)
+		}
+
+		window.addEventListener('keydown', this._keyDown)
+	},
+	mounted() {
+		twemoji.parse(document, { folder: "svg", ext: ".svg" })
+	},	
 	watch: {
 		message(val) {
 			localStorage.message = JSON.stringify(val)
@@ -134,5 +138,10 @@ export default {
 
 #instructions b {
 	color: #666
+}
+
+img.emoji {
+	width: 1.1em;
+	vertical-align: text-bottom;
 }
 </style>
