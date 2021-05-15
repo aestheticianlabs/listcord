@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<ul class="list-group" v-sortable="{onUpdate: onListUpdate}">
+		<ul class="list-group" v-sortable="{onUpdate: _onListUpdate}">
 			<list-item 
 				:class="{
 					'list-group-item': true, 
@@ -11,7 +11,7 @@
 				:ref="v.uuid"
 				:key="v.uuid" 
 				:value="v"
-				@input="onItemUpdate(i, $event)"
+				@input="_onItemUpdate(i, $event)"
 				@focus="_setSelected(i, false, false)"
 				@click="_setSelected(i, false, false)"
 				@picker-shown="keysEnabled=false"
@@ -50,26 +50,26 @@ export default {
 		}
 	},
 	created() {
-		this.updateList(this.value)
-		window.addEventListener('keydown', this.keyDown);
+		this._updateList(this.value)
+		window.addEventListener('keydown', this._keyDown);
 	},
 	mounted() {
 		this._setSelected(this.selected, false, true)
 	},
 	watch: {
-		value(val) { this.updateList(val) }
+		value(val) { this._updateList(val) }
 	},
 	methods: {
-		addItem(i) {
+		_addItem(i) {
 			var item = { text: "", uuid: uuidv4() }
 			this.list.splice(i + 1, 0, item)
 			this.$nextTick(() => { this.$refs[item.uuid][0].$el.click() })
 		},
-		removeItem(i) {
+		_removeItem(i) {
 			this.list.splice(i, 1)
-			this.moveSelection(-1, false)
+			this._moveSelection(-1, false)
 		},
-		keyDown(event) {
+		_keyDown(event) {
 			if(!this.keysEnabled) return;
 
 			var component = this._getSelectedComponent()
@@ -77,28 +77,28 @@ export default {
 			switch(event.code) {
 				case 'Enter': 
 					if (component.editing) {
-						this.addItem(this.selected)
+						this._addItem(this.selected)
 					}
 					break;
 				case 'Backspace': 
 					if(this.list[this.selected].text === '') 
-						this.removeItem(this.selected)
+						this._removeItem(this.selected)
 					break;
 				case 'KeyJ':
 					if (!component.editing) {
-						this.moveSelection(1)
+						this._moveSelection(1)
 					}
 					break;
 				case 'ArrowDown':
-					this.moveSelection(1, true)
+					this._moveSelection(1, true)
 					break;
 				case 'KeyK':
 					if (!component.editing) {
-						this.moveSelection(-1)
+						this._moveSelection(-1)
 					}
 					break;
 				case 'ArrowUp':
-					this.moveSelection(-1, true)
+					this._moveSelection(-1, true)
 					break;
 			}
 		},
@@ -109,7 +109,7 @@ export default {
 		_getSelectedComponent() {
 			return this._getComponent(this.selected)
 		},
-		moveSelection(amt, click = false) {
+		_moveSelection(amt, click = false) {
 			var next = mod((this.selected + amt), this.list.length);
 			this._setSelected(next, click)
 		},
@@ -130,20 +130,20 @@ export default {
 
 			this.selected = i;
 		},
-		onListUpdate(event) {
+		_onListUpdate(event) {
 			var list = this.list
 			list.splice(event.newIndex, 0, list.splice(event.oldIndex, 1)[0])
 			this.selected = event.newIndex
-			this.notifyInput(list)
+			this._notifyInput(list)
 		},
-		onItemUpdate(i, val) {
+		_onItemUpdate(i, val) {
 			this.$set(this.list, i, val)
-			this.notifyInput(this.list)
+			this._notifyInput(this.list)
 		},
-		notifyInput(newList) {
+		_notifyInput(newList) {
 			this.$emit('input', newList)
 		},
-		updateList(val) {
+		_updateList(val) {
 			let newList = val
 
 			for (var i = 0; i < newList.length; i++) {

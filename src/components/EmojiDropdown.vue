@@ -59,9 +59,6 @@ export default {
 			shown: false
 		}
 	},
-	watch: {
-		emoji(val) { this.emojiInternal = val }
-	},
 	computed: {
 		emojiSVG() {
 			return twemoji.parse(this.emojiInternal.native, {
@@ -79,6 +76,9 @@ export default {
 		this.$refs.dropdown.$refs.toggle.addEventListener(
 			'focus', (e) => this.$emit('focus', e)
 		)
+	},
+	watch: {
+		emoji(val) { this.emojiInternal = val }
 	},
 	methods: {
 		_onSelect(emoji) {

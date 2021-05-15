@@ -4,9 +4,9 @@
 			'list-group-item': true,
 			'z-3000': pickerOpen
 		}" 
-		@click="onClick"
+		@click="_onClick"
 		@focus="$emit('focus', $event)"
-		@keydown="keyDown"
+		@keydown="_keyDown"
 		tabindex="0"
 	>
 		<div class="input-group">
@@ -32,7 +32,7 @@
 					}"
 					:value="value.text" 
 					@input="_onInput"
-					@focus="onFocus"
+					@focus="_onFocus"
 					@blur="editing=false"
 				>
 			</div>
@@ -70,7 +70,7 @@ export default {
 		}
 	},
 	methods: {
-		keyDown(event) {
+		_keyDown(event) {
 			if(event.target === this.$refs.picker.$refs.searchInput) return;
 
 			if (event.metaKey) {
@@ -125,7 +125,7 @@ export default {
 			}
 			this.$emit('input', this.value)
 		},
-		onClick(event) {
+		_onClick(event) {
 			if (this.$refs.picker.$el.contains(event.target)) {
 				event.stopPropagation()
 				return
@@ -135,7 +135,7 @@ export default {
 			this.$nextTick(() => this.$refs.input.focus())
 			this.$emit('click', event);
 		},
-		onFocus(event) {
+		_onFocus(event) {
 			this.editing = true;
 			setTimeout(() => event.target.select(), 50)
 		},

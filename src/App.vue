@@ -23,7 +23,7 @@
 				ref="copyBtn"
 				variant="outline-primary"
 				class="my-2"
-				@click="copyMessage"
+				@click="_copyMessage"
 			>
 				Copy message
 			</b-button>
@@ -33,7 +33,7 @@
 				:show.sync="showTooltip"
 				title="Copied!"
 				triggers
-				@shown="setTooltipTimeout"
+				@shown="_setTooltipTimeout"
 			/>
 
 			<!-- instructions -->
@@ -128,11 +128,11 @@ export default {
 		}
 	},
 	methods: {
-		copyMessage() {
+		_copyMessage() {
 			navigator.clipboard.writeText(this.text)
 			this.showTooltip = true
 		},
-		setTooltipTimeout() {
+		_setTooltipTimeout() {
 			setTimeout(() => { this.showTooltip = false }, 1000)
 		},
 		_keyDown(event) {
