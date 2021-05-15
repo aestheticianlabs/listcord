@@ -40,7 +40,13 @@ export default {
 		return {
 			list: [],
 			selected: 0,
-			keysEnabled: true
+			keysEnabled: true,
+		}
+	},
+	computed: {
+		editing() {
+			var component = this._getSelectedComponent()
+			return component && component.editing
 		}
 	},
 	created() {

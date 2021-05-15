@@ -4,7 +4,11 @@
 		<span>Create and paste lists for Discord</span>
 
 		<div class="mx-auto my-2 justify-content-center" style="max-width: 512px">
-			<text-list v-model="message" class="my-2"/>
+			<text-list 
+				ref="list"
+				v-model="message" 
+				class="my-2"
+			/>
 
 			<!-- debug message list -->
 			<!-- <textarea 
@@ -16,12 +20,14 @@
 
 			<b-button 
 				id="btn-copy"
+				ref="copyBtn"
 				variant="outline-primary"
 				class="my-2"
 				@click="copyMessage"
 			>
 				Copy message
 			</b-button>
+
 			<b-tooltip
 				target="btn-copy"
 				:show.sync="showTooltip"
@@ -37,6 +43,7 @@
 				<p><b><meta-key />B</b> to embolden line, <b><meta-key />U</b> to underline.</p>
 				<p><b>Backspace</b> on an empty line to remove.</p>
 				<p><b>E</b> to edit emoji. <b>Backspace</b> in empty search to remove.</p>
+				<p><b><meta-key />C</b> to copy message to clipboard.</p>
 			</div>
 		</div>
 
@@ -71,6 +78,8 @@ export default {
 		if (localStorage.message) {
 			this.message = JSON.parse(localStorage.message)
 		}
+
+		window.addEventListener('keydown', this._keyDown)
 	},
 	computed: {
 		text() {
@@ -95,6 +104,13 @@ export default {
 		},
 		setTooltipTimeout() {
 			setTimeout(() => { this.showTooltip = false }, 1000)
+		},
+		_keyDown(event) {
+			if(this.$refs.list.editing) return
+
+			if(event.metaKey && event.code === 'KeyC') {
+				this.$refs.copyBtn.click()
+			}
 		}
 	}
 }
