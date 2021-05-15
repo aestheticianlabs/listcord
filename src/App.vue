@@ -156,6 +156,7 @@ html[data-theme='dark'] {
 }
 
 html, body {
+	transition: background 0.2s;
 	background: var(--light) !important;
 	color: var(--dark) !important;
 }

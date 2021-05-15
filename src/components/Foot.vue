@@ -6,6 +6,7 @@
 
 <style>
 #footer {
+	color: var(--secondary);
 	font-size: 10pt;
 	position: fixed;
 	bottom: 0;
