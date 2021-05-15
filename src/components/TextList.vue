@@ -97,6 +97,7 @@ export default {
 			}
 		},
 		_getComponent(i) {
+			if (!this.list[i]) return null;
 			return this.$refs[this.list[i].uuid][0]
 		},
 		_getSelectedComponent() {
@@ -107,8 +108,11 @@ export default {
 			this._setSelected(next, click)
 		},
 		_setSelected(i, click = false, focus = true) {
-			if (i != this.selected) {
-				this._getSelectedComponent().$el.blur()
+			if (i !== this.selected) {
+				var selected = this._getSelectedComponent()
+				if (selected) {
+					selected.$el.blur()
+				}
 			}
 
 			if (click) {
