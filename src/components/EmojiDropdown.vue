@@ -6,15 +6,26 @@
 		@hidden="_onHidden"
 	>
 		<template #button-content>
-			<b-icon icon="emoji-smile" v-if="!emoji" />
-			<span v-if="emojiInternal"> {{ emojiInternal.native }} </span>
+			<b-icon
+				v-if="!emoji"
+				icon="emoji-smile"
+			/>
+			<emoji 
+				v-if="emojiInternal"
+				:data="index"
+				:emoji="emojiInternal.id"
+				:size="20"
+				:sheetSize="20"
+				class="p-0 align-text-bottom"
+				set="twitter"
+			/>
 		</template>
 		<emoji-picker 
 			ref="picker"
 			style="z-index: 100"
+			set="twitter"
 			:emoji="emojiInternal ? emojiInternal.id : undefined"
-			:data="emojiIndex"
-			:native="true" 
+			:data="index"
 			:autoFocus="true" 
 			@select="_onSelect" 
 			@keydown="_keyDown"
@@ -24,13 +35,13 @@
 
 <script>
 // TODO: does storing the index here create a lot of data duplication?
-import data from 'emoji-mart-vue-fast/data/all.json'
+import data from 'emoji-mart-vue-fast/data/twitter.json'
 import 'emoji-mart-vue-fast/css/emoji-mart.css'
-import { Picker as EmojiPicker, EmojiIndex } from 'emoji-mart-vue-fast'
+import { Emoji, Picker as EmojiPicker, EmojiIndex } from 'emoji-mart-vue-fast'
 
 export default {
 	components: {
-		EmojiPicker
+		Emoji, EmojiPicker
 	},
 	props: {
 		emoji: null
@@ -38,7 +49,7 @@ export default {
 	data() {
 		return {
 			emojiInternal: null,
-			emojiIndex: new EmojiIndex(data),
+			index: new EmojiIndex(data),
 			shown: false
 		}
 	},
