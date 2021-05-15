@@ -119,6 +119,10 @@ export default {
 	},	
 	watch: {
 		message(val) {
+			if (val.length === 0) {
+				this.message = [{ text: "" }]
+				return;
+			}
 			localStorage.message = JSON.stringify(val)
 		},
 		theme(val) {

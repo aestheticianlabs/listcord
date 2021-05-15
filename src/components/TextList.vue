@@ -81,7 +81,10 @@ export default {
 					}
 					break;
 				case 'Backspace': 
-					if(this.list[this.selected].text === '') 
+					if (event.metaKey) {
+						this._notifyInput([{ "text": "", "emoji": null }])
+					}
+					else if (this.list[this.selected].text === '') 
 						this._removeItem(this.selected)
 					break;
 				case 'KeyJ':
@@ -121,11 +124,16 @@ export default {
 				}
 			}
 
+			if (i < 0 || i >= this.list.length) return
+
+			var component = this._getComponent(i)
+			if(!component) return
+
 			if (click) {
-				this._getComponent(i).$el.click()
+				component.$el.click()
 			}
 			else if (focus) {
-				this._getComponent(i).$el.focus()
+				component.$el.focus()
 			}
 
 			this.selected = i;
@@ -159,6 +167,10 @@ export default {
 			}
 			
 			this.list = newList
+
+			if(this.selected >= this.list.length) {
+				this._setSelected(0)
+			}
 		},
 		_pickerHidden() {
 			setTimeout(() => this.keysEnabled = true, 50)
