@@ -43,6 +43,7 @@
 				<p><b><meta-key />B</b> to embolden line, <b><meta-key />U</b> to underline.</p>
 				<p><b>Backspace</b> on an empty line to remove.</p>
 				<p><b>E</b> to edit emoji. <b>Backspace</b> in empty search to remove.</p>
+				<p><b>Drag</b> to rearrange.</p>
 				<p><b><meta-key />C</b> to copy message to clipboard.</p>
 			</div>
 		</div>
