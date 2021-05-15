@@ -152,7 +152,7 @@ export default {
 			this.$emit('picker-shown', event)
 		},
 		_pickerHidden(event) {
-			this.$el.focus()
+			this.$nextTick(() => this.$el.focus())
 			this.pickerOpen = false
 			this.$emit('picker-hidden', event)
 		}
