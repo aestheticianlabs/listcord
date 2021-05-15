@@ -1,6 +1,8 @@
 # listcord
 
-Create and paste lists for Discord.
+Create and paste lists for Discord. 
+
+[Check out the app](https://aesthetic.games/tools/listcord).
 
 ## Project setup
 ```
