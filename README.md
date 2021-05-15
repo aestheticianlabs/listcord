@@ -1,5 +1,7 @@
 # listcord
 
+Create and paste lists for Discord.
+
 ## Project setup
 ```
 npm install
