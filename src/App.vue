@@ -48,6 +48,17 @@
 		</div>
 
 		<foot />
+
+		<div id="theme-switch" class="text-secondary py-2 px-3">
+			<b-icon icon="moon" class="mr-2" />
+			<b-form-checkbox 
+				v-model="lightTheme" 
+				name="Theme switch" 
+				style="display: inline-block;"
+				switch 
+			/>
+			<b-icon icon="sun"/>
+		</div>
 	</div>
 </template>
 
@@ -72,7 +83,8 @@ export default {
 				{ text: "this" },
 				{ text: "list" }
 			],
-			showTooltip: false
+			showTooltip: false,
+			lightTheme: localStorage.theme || true
 		}
 	},
 	computed: {
@@ -84,12 +96,20 @@ export default {
 					return str
 				})
 				.join('\n')
+		},
+		theme() {
+			return this.lightTheme ? 'light' : 'dark';
 		}
 	},
 	created() {
 		if (localStorage.message) {
 			this.message = JSON.parse(localStorage.message)
 		}
+
+		this.lightTheme = localStorage.theme === 'true' || !(window.matchMedia
+			&& window.matchMedia('(prefers-color-scheme: dark)').matches)
+
+		document.documentElement.dataset.theme = this.theme
 
 		window.addEventListener('keydown', this._keyDown)
 	},
@@ -99,6 +119,12 @@ export default {
 	watch: {
 		message(val) {
 			localStorage.message = JSON.stringify(val)
+		},
+		theme(val) {
+			document.documentElement.dataset.theme = val
+		},
+		lightTheme(val) {
+			localStorage.theme = val
 		}
 	},
 	methods: {
@@ -121,6 +147,18 @@ export default {
 </script>
 
 <style>
+
+html[data-theme='dark'] {
+	--dark: #f8f9fa;
+	--light: #343a40;
+	--secondary: #888;
+}
+
+html, body {
+	background: var(--light) !important;
+	color: var(--dark) !important;
+}
+
 #app {
 	text-align: center;
 	margin-top: 60px;
@@ -128,7 +166,7 @@ export default {
 }
 
 #instructions {
-	color: #888;
+	color: var(--secondary);
 	font-size: 10pt
 }
 
@@ -137,11 +175,17 @@ export default {
 }
 
 #instructions b {
-	color: #666
+	color: var(--dark)
 }
 
 img.emoji {
 	width: 1.1em;
 	vertical-align: text-bottom;
+}
+
+#theme-switch {
+	position: fixed;
+	top: 0;
+	right: 0;
 }
 </style>

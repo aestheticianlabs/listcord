@@ -2,6 +2,7 @@
 	<b-dropdown 
 		variant="outline-secondary" 
 		ref="dropdown"
+		class="emoji-dropdown"
 		@shown="_onShown"
 		@hidden="_onHidden"
 	>
@@ -111,6 +112,36 @@ export default {
 .dropdown-toggle img.emoji {
 	width: 20px;
 	height: 20px;
-	vertical-align: text-bottom;
+}
+
+.emoji-dropdown .dropdown-menu {
+	background-color: var(--light) !important;
+	color: var(--dark) !important;
+	padding: 0;
+}
+
+.emoji-mart {
+	background: var(--light);
+}
+
+.emoji-mart button {
+	color: var(--dark);
+}
+
+.emoji-mart button:hover {
+	color: var(--secondary);
+}
+
+.emoji-mart-category-label {
+	color: var(--dark);
+	background: var(--light) !important;
+}
+
+.emoji-mart-search {
+	margin-bottom: 6px;
+}
+html[data-theme="dark"] .emoji-mart-category .emoji-mart-emoji:hover:before,
+html[data-theme="dark"] .emoji-mart-emoji-selected:before {
+	background-color: var(--secondary)
 }
 </style>

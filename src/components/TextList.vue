@@ -166,3 +166,23 @@ export default {
 	}
 }
 </script>
+
+<style>
+.list-group-item {
+	background-color: var(--light) !important;
+}
+
+.btn-outline-secondary {
+	color: var(--secondary);
+	fill: var(--secondary);
+}
+
+html[data-theme="dark"] .list-group-item {
+	border-color: var(--secondary) !important;
+}
+
+html[data-theme="dark"] .list-group-item-primary {
+	border-color: var(--primary) !important;
+	background-color: #555 !important;
+}
+</style>
