@@ -10,7 +10,7 @@
 				v-if="!emoji"
 				icon="emoji-smile"
 			/>
-			<emoji 
+			<!-- <emoji 
 				v-if="emojiInternal"
 				:data="index"
 				:emoji="emojiInternal.id"
@@ -18,7 +18,11 @@
 				:sheetSize="20"
 				class="p-0 align-text-bottom"
 				set="twitter"
-			/>
+			/> -->
+			<span
+				v-if="emojiInternal"
+				v-html="emojiSVG"
+			></span>
 		</template>
 		<emoji-picker 
 			ref="picker"
@@ -37,11 +41,12 @@
 // TODO: does storing the index here create a lot of data duplication?
 import data from 'emoji-mart-vue-fast/data/twitter.json'
 import 'emoji-mart-vue-fast/css/emoji-mart.css'
-import { Emoji, Picker as EmojiPicker, EmojiIndex } from 'emoji-mart-vue-fast'
+import { Picker as EmojiPicker, EmojiIndex } from 'emoji-mart-vue-fast'
+import twemoji from 'twemoji'
 
 export default {
 	components: {
-		Emoji, EmojiPicker
+		EmojiPicker
 	},
 	props: {
 		emoji: null
@@ -55,6 +60,14 @@ export default {
 	},
 	watch: {
 		emoji(val) { this.emojiInternal = val }
+	},
+	computed: {
+		emojiSVG() {
+			return twemoji.parse(this.emojiInternal.native, {
+				folder: 'svg',
+				ext: '.svg',
+			})
+		}
 	},
 	created() {
 		this.emojiInternal = this.emoji
@@ -93,3 +106,11 @@ export default {
 	}
 }
 </script>
+
+<style>
+img.emoji {
+	width: 20px;
+	height: 20px;
+	vertical-align: text-bottom;
+}
+</style>
