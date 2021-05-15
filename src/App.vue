@@ -3,20 +3,21 @@
 		<h1>listcord 📝</h1>
 		<span>Create and paste lists for Discord</span>
 
-		<div class="mx-auto justify-content-center" style="max-width: 512px">
-			<text-list v-model="message"/>
+		<div class="mx-auto my-2 justify-content-center" style="max-width: 512px">
+			<text-list v-model="message" class="my-2"/>
 
 			<!-- debug message list -->
-			<textarea 
+			<!-- <textarea 
 				:value="text" 
 				disabled 
 				class="my-3" 
 				style="width: 100%; height: 150px;"
-			/>
+			/> -->
 
 			<b-button 
 				id="btn-copy"
 				variant="outline-primary"
+				class="my-2"
 				@click="copyMessage"
 			>
 				Copy message
@@ -28,6 +29,15 @@
 				triggers
 				@shown="setTooltipTimeout"
 			/>
+
+			<!-- instructions -->
+			<div id="instructions" class="my-2">
+				<p><b>&#9650;</b>/<b>&#9660;</b> or <b>H</b>/<b>J</b> for navigation.</p>
+				<p><b>Enter</b> to edit text or add a new line. <b>Esc</b> to stop editing.</p>
+				<p><b><meta-key />B</b> to embolden line, <b><meta-key />U</b> to underline.</p>
+				<p><b>Backspace</b> on an empty line to remove.</p>
+				<p><b>E</b> to edit emoji. <b>Backspace</b> in empty search to remove.</p>
+			</div>
 		</div>
 
 		<foot />
@@ -37,12 +47,14 @@
 <script>
 import Foot from "./components/Foot.vue"
 import TextList from './components/TextList.vue'
+import MetaKey from './components/MetaKey.vue'
 
 export default {
 	name: 'App',
 	components: {
 		Foot,
-		TextList
+		TextList,
+		MetaKey
 	},
 	data() {
 		return {
@@ -93,5 +105,18 @@ export default {
 	text-align: center;
 	margin-top: 60px;
 	padding: 0px 12px
+}
+
+#instructions {
+	color: #888;
+	font-size: 10pt
+}
+
+#instructions p {
+	margin-bottom: 0.2rem
+}
+
+#instructions b {
+	color: #666
 }
 </style>
