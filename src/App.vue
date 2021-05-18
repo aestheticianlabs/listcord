@@ -68,6 +68,7 @@ import Foot from "./components/Foot.vue"
 import TextList from './components/TextList.vue'
 import MetaKey from './components/MetaKey.vue'
 import twemoji from 'twemoji'
+import Platform from './platform'
 
 export default {
 	name: 'App',
@@ -143,7 +144,7 @@ export default {
 		_keyDown(event) {
 			if(this.$refs.list.editing) return
 
-			if(event.metaKey && event.code === 'KeyC') {
+			if(Platform.isMainModifierDown(event) && event.code === 'KeyC') {
 				this.$refs.copyBtn.click()
 			}
 		}

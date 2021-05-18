@@ -3,10 +3,12 @@
 </template>
 
 <script>
+import Platform from '../platform'
+
 export default {
 	computed: {
 		key() {
-			return navigator.userAgent.match(/Macintosh/) ? "&#8984;" : "^"
+			return Platform.getModifierSymbol()
 		}
 	}
 }

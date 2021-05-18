@@ -24,6 +24,7 @@
 <script>
 import ListItem from './ListItem.vue'
 import { v4 as uuidv4 } from 'uuid'
+import Platform from '../platform'
 
 function mod(n, m) {
 	return ((n % m) + m) % m;
@@ -81,7 +82,7 @@ export default {
 					}
 					break;
 				case 'Backspace': 
-					if (event.metaKey) {
+					if (Platform.isMainModifierDown(event)) {
 						this._notifyInput([{ "text": "", "emoji": null }])
 					}
 					else if (this.list[this.selected].text === '') 

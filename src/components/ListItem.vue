@@ -42,6 +42,7 @@
 
 <script>
 import EmojiDropdown from './EmojiDropdown.vue'
+import Platform from '../platform'
 
 const boldRegex = /\*\*(.*)\*\*/g
 const underlineRegex = /__(.*)__/g
@@ -73,7 +74,7 @@ export default {
 		_keyDown(event) {
 			if(event.target === this.$refs.picker.$refs.searchInput) return;
 
-			if (event.metaKey) {
+			if (Platform.isMainModifierDown(event)) {
 				switch(event.code) {
 					case 'KeyB':
 						// bold
