@@ -1,6 +1,7 @@
 <template>
 	<div id="footer">
-		<span>Created with ❤️ by <a href="https://aesthetic.games" target="_blank">Aesthetician Labs</a></span>
+		<p>Fork or open an issue on <a href="https://github.com/aestheticianlabs/listcord" target="_blank">GitHub</a></p>
+		<p>Created with ❤️ by <a href="https://aesthetic.games" target="_blank">Aesthetician Labs</a></p>
 	</div>
 </template>
 
@@ -12,5 +13,9 @@
 	bottom: 0;
 	width: 100%;
 	padding: 3px 5px;
+}
+
+#footer p {
+	margin: 0 0 0 2px;
 }
 </style>
