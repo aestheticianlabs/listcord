@@ -192,6 +192,6 @@ export default {
 
 .form-control {
 	background-color: var(--light) !important;
-	color: var(--dark) !important;
+	color: var(--text) !important;
 }
 </style>

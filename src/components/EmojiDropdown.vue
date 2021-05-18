@@ -144,4 +144,8 @@ html[data-theme="dark"] .emoji-mart-category .emoji-mart-emoji:hover:before,
 html[data-theme="dark"] .emoji-mart-emoji-selected:before {
 	background-color: var(--secondary)
 }
+
+html[data-theme="dark"] .emoji-mart-preview-name {
+	color: var(--text);
+}
 </style>

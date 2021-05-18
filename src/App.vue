@@ -170,10 +170,18 @@ export default {
 
 <style>
 
+html {
+	--dark: #37393F;
+	--text: var(--dark);
+	--light: #DADBDC;
+	--secondary: #B9BBBE;
+}
+
 html[data-theme='dark'] {
-	--dark: #f8f9fa;
-	--light: #343a40;
-	--secondary: #888;
+	--dark: #DADBDC;
+	--light: #2F3137;
+	--secondary: #72767D;
+	--text: #DCDDDE;
 }
 
 html, body {
@@ -227,14 +235,28 @@ img.emoji {
 }
 
 html[data-theme="dark"] .list-group-item,
-html[data-theme="dark"] .btn,
+html[data-theme="dark"] .btn:not(.btn-link),
 html[data-theme="dark"] .form-control {
-	background-color: var(--light) !important;
+	background-color: #40444B !important;
 	border-color: var(--secondary) !important;
+}
+
+html[data-theme="dark"] .btn {
+	color: #B9BBBE !important;
+}
+
+html[data-theme="dark"] .list-group-item { 
+	background-color: #37393F !important;
 }
 
 html[data-theme="dark"] .list-group-item-primary {
 	border-color: var(--primary) !important;
-	background-color: #555 !important;
+	background-color: #37393F !important;
+}
+
+html[data-theme="dark"] input {
+	background-color: #40444B !important;
+	color: var(--text) !important;
+	border: none !important;
 }
 </style>
