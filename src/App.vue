@@ -1,63 +1,65 @@
 <template>
-	<div id="app">
-		<h1>listcord 📝</h1>
-		<span>Create and paste lists for Discord</span>
+	<div id="app" class="d-flex flex-column h-100">
+		<div style="flex: 1 0 auto;">
+			<h1>listcord 📝</h1>
+			<span>Create and paste lists for Discord</span>
 
-		<div class="mx-auto my-2 justify-content-center" style="max-width: 512px">
-			<text-list 
-				ref="list"
-				v-model="message" 
-				class="my-2"
-			/>
+			<div class="mx-auto my-2 justify-content-center" style="max-width: 512px">
+				<text-list 
+					ref="list"
+					v-model="message" 
+					class="my-2"
+				/>
 
-			<!-- debug message list -->
-			<!-- <textarea 
-				:value="text" 
-				disabled 
-				class="my-3" 
-				style="width: 100%; height: 150px;"
-			/> -->
+				<!-- debug message list -->
+				<!-- <textarea 
+					:value="text" 
+					disabled 
+					class="my-3" 
+					style="width: 100%; height: 150px;"
+				/> -->
 
-			<b-button 
-				id="btn-copy"
-				ref="copyBtn"
-				variant="outline-primary"
-				class="my-2"
-				@click="_copyMessage"
-			>
-				Copy message
-			</b-button>
-
-			<b-tooltip
-				target="btn-copy"
-				:show.sync="showTooltip"
-				title="Copied!"
-				triggers
-				@shown="_setTooltipTimeout"
-			/>
-
-			<!-- instructions -->
-			<div>
 				<b-button 
-					ref="helpBtn"
-					id="helpBtn"
-					v-b-toggle:instructions 
-					variant="link" 
+					id="btn-copy"
+					ref="copyBtn"
+					variant="outline-primary"
+					class="my-2"
+					@click="_copyMessage"
 				>
-					<span class="when-open">Hide</span>
-					<span class="when-closed">Show</span>
-					help
+					Copy message
 				</b-button>
-				<b-collapse id="instructions" class="my-2">
-					<p><b>H</b> to toggle help.</p>
-					<p><b>&#9650;</b>/<b>&#9660;</b> or <b>K</b>/<b>J</b> for navigation.</p>
-					<p><b>Enter</b> to edit text or add a new line. <b>Esc</b> to stop editing.</p>
-					<p><b><meta-key />B</b> to embolden line, <b><meta-key />U</b> to underline.</p>
-					<p><b>E</b> to edit emoji. <b>Backspace</b> in empty search to remove.</p>
-					<p><b>Backspace</b> on an empty line to remove. <b><meta-key />Backspace</b> to clear the list.</p>
-					<p><b>Drag</b> to rearrange.</p>
-					<p><b><meta-key />C</b> to copy message to clipboard.</p>
-				</b-collapse>
+
+				<b-tooltip
+					target="btn-copy"
+					:show.sync="showTooltip"
+					title="Copied!"
+					triggers
+					@shown="_setTooltipTimeout"
+				/>
+
+				<!-- instructions -->
+				<div>
+					<b-button 
+						ref="helpBtn"
+						id="helpBtn"
+						v-b-toggle:instructions 
+						variant="link" 
+					>
+						<span class="when-open">Hide</span>
+						<span class="when-closed">Show</span>
+						help
+					</b-button>
+					<b-collapse id="instructions" class="my-2">
+						<p><b>H</b> to toggle help.</p>
+						<p><b>&#9650;</b>/<b>&#9660;</b> or <b>K</b>/<b>J</b> for navigation.</p>
+						<p><b>Enter</b> to edit text or add a new line. <b>Esc</b> to stop editing.</p>
+						<p><b><meta-key />B</b> to embolden line, <b><meta-key />U</b> to underline.</p>
+						<p><b>E</b> to edit emoji. <b>Backspace</b> in empty search to remove.</p>
+						<p><b>Backspace</b> on an empty line to remove. <b><meta-key />Backspace</b> to clear the list.</p>
+						<p><b>Drag</b> to rearrange.</p>
+						<p><b><meta-key />C</b> to copy message to clipboard.</p>
+					</b-collapse>
+				</div>
 			</div>
 		</div>
 
@@ -188,12 +190,12 @@ html, body {
 	transition: background 0.2s;
 	background: var(--light) !important;
 	color: var(--dark) !important;
+	height: 100%;
 }
 
 #app {
 	text-align: center;
-	margin-top: 60px;
-	padding: 0px 12px
+	padding: 60px 12px 0 12px;
 }
 
 #instructions, #helpBtn {

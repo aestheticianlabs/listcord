@@ -9,8 +9,7 @@
 #footer {
 	color: var(--secondary);
 	font-size: 10pt;
-	position: fixed;
-	bottom: 0;
+	flex-shrink: 0;
 	width: 100%;
 	padding: 3px 5px;
 }
