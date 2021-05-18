@@ -37,14 +37,27 @@
 			/>
 
 			<!-- instructions -->
-			<div id="instructions" class="my-2">
-				<p><b>&#9650;</b>/<b>&#9660;</b> or <b>K</b>/<b>J</b> for navigation.</p>
-				<p><b>Enter</b> to edit text or add a new line. <b>Esc</b> to stop editing.</p>
-				<p><b><meta-key />B</b> to embolden line, <b><meta-key />U</b> to underline.</p>
-				<p><b>E</b> to edit emoji. <b>Backspace</b> in empty search to remove.</p>
-				<p><b>Backspace</b> on an empty line to remove. <b><meta-key />Backspace</b> to clear the list.</p>
-				<p><b>Drag</b> to rearrange.</p>
-				<p><b><meta-key />C</b> to copy message to clipboard.</p>
+			<div>
+				<b-button 
+					ref="helpBtn"
+					id="helpBtn"
+					v-b-toggle:instructions 
+					variant="link" 
+				>
+					<span class="when-open">Hide</span>
+					<span class="when-closed">Show</span>
+					help
+				</b-button>
+				<b-collapse id="instructions" class="my-2">
+					<p><b>H</b> to toggle help.</p>
+					<p><b>&#9650;</b>/<b>&#9660;</b> or <b>K</b>/<b>J</b> for navigation.</p>
+					<p><b>Enter</b> to edit text or add a new line. <b>Esc</b> to stop editing.</p>
+					<p><b><meta-key />B</b> to embolden line, <b><meta-key />U</b> to underline.</p>
+					<p><b>E</b> to edit emoji. <b>Backspace</b> in empty search to remove.</p>
+					<p><b>Backspace</b> on an empty line to remove. <b><meta-key />Backspace</b> to clear the list.</p>
+					<p><b>Drag</b> to rearrange.</p>
+					<p><b><meta-key />C</b> to copy message to clipboard.</p>
+				</b-collapse>
 			</div>
 		</div>
 
@@ -147,6 +160,9 @@ export default {
 			if(Platform.isMainModifierDown(event) && event.code === 'KeyC') {
 				this.$refs.copyBtn.click()
 			}
+			else if(event.code === "KeyH") {
+				this.$refs.helpBtn.click()
+			}
 		}
 	}
 }
@@ -172,7 +188,7 @@ html, body {
 	padding: 0px 12px
 }
 
-#instructions {
+#instructions, #helpBtn {
 	color: var(--secondary);
 	font-size: 10pt
 }
@@ -194,5 +210,31 @@ img.emoji {
 	position: fixed;
 	top: 0;
 	right: 0;
+}
+
+.collapsed > .when-open,
+.not-collapsed > .when-closed {
+	display: none;
+}
+
+.btn-link {
+	padding: 0 !important;
+	border: none !important;
+}
+
+.btn-link:focus {
+	box-shadow: none !important;
+}
+
+html[data-theme="dark"] .list-group-item,
+html[data-theme="dark"] .btn,
+html[data-theme="dark"] .form-control {
+	background-color: var(--light) !important;
+	border-color: var(--secondary) !important;
+}
+
+html[data-theme="dark"] .list-group-item-primary {
+	border-color: var(--primary) !important;
+	background-color: #555 !important;
 }
 </style>

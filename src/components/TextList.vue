@@ -194,16 +194,4 @@ export default {
 	background-color: var(--light) !important;
 	color: var(--dark) !important;
 }
-
-html[data-theme="dark"] .list-group-item,
-html[data-theme="dark"] .btn,
-html[data-theme="dark"] .form-control {
-	background-color: var(--light) !important;
-	border-color: var(--secondary) !important;
-}
-
-html[data-theme="dark"] .list-group-item-primary {
-	border-color: var(--primary) !important;
-	background-color: #555 !important;
-}
 </style>
