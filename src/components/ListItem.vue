@@ -20,12 +20,12 @@
 					@select="_onEmojiSelect"
 				/>
 			</div>
-			<div class="form-control">
+			<div class="form-control h-auto">
 				<span 
 					v-show="!editing" 
 					v-html="formattedText"
 				></span>
-				<input 
+				<input
 					ref="input"
 					:style="{
 						'display': editing ? 'inline' : 'none'
