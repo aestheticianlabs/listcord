@@ -157,12 +157,12 @@ export default {
 			setTimeout(() => { this.showTooltip = false }, 1000)
 		},
 		_keyDown(event) {
-			if(this.$refs.list.editing) return
+			if (this.$refs.list.editing || this.$refs.list.pickerOpen) return
 
-			if(Platform.isMainModifierDown(event) && event.code === 'KeyC') {
+			if (Platform.isMainModifierDown(event) && event.code === 'KeyC') {
 				this.$refs.copyBtn.click()
 			}
-			else if(event.code === "KeyH") {
+			else if (event.code === "KeyH") {
 				this.$refs.helpBtn.click()
 			}
 		}

@@ -48,6 +48,10 @@ export default {
 		editing() {
 			var component = this._getSelectedComponent()
 			return component && component.editing
+		},
+		pickerOpen() {
+			var component = this._getSelectedComponent()
+			return component && component.pickerOpen
 		}
 	},
 	created() {
