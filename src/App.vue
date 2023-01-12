@@ -131,7 +131,13 @@ export default {
 		window.addEventListener('keydown', this._keyDown)
 	},
 	mounted() {
-		twemoji.parse(document, { folder: "svg", ext: ".svg" })
+		twemoji.parse(
+			document, 
+			{ 
+				base: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/',
+				folder: 'svg', ext: '.svg'
+			}
+		)
 	},	
 	watch: {
 		message(val) {

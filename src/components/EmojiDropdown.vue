@@ -61,9 +61,9 @@ export default {
 	},
 	computed: {
 		emojiSVG() {
-			return twemoji.parse(this.emojiInternal.native, {
-				folder: 'svg',
-				ext: '.svg',
+			return twemoji.parse(this.emojiInternal.native, { 
+				base: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/',
+				folder: 'svg', ext: '.svg'
 			})
 		}
 	},
