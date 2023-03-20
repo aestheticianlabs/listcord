@@ -44,8 +44,10 @@
 import EmojiDropdown from './EmojiDropdown.vue'
 import Platform from '../platform'
 
+const emphasisRegex = /\*(.*)\*/g
 const boldRegex = /\*\*(.*)\*\*/g
 const underlineRegex = /__(.*)__/g
+const strikethroughRegex = /~~(.*)~~/g
 
 export default {
   components: { EmojiDropdown },
@@ -66,8 +68,10 @@ export default {
 	computed: {
 		formattedText() {
 			return this.value.text
+				.replace(emphasisRegex, "<em>$1</em>")
 				.replace(boldRegex, "<b>$1</b>")
 				.replace(underlineRegex, "<u>$1</u>")
+				.replace(strikethroughRegex, "<s>$1</s>")
 		}
 	},
 	methods: {
@@ -76,6 +80,10 @@ export default {
 
 			if (Platform.isMainModifierDown(event)) {
 				switch(event.code) {
+					case 'KeyI':
+						// bold
+						this._toggleEmphasis()
+						break;
 					case 'KeyB':
 						// bold
 						this._toggleBold()
@@ -84,6 +92,11 @@ export default {
 						// underline
 						this._toggleUnderline()
 						break;
+					case 'KeyS':
+						// strikethrough (ctrl+shift+s)
+						if (event.shiftKey) {
+							this._toggleStrikethrough()
+						}
 				}
 			}
 			else if (!this.editing) {
@@ -108,6 +121,15 @@ export default {
 
 			this.$emit('keydown', event)
 		},
+		_toggleEmphasis() {
+			let result = this.value.text.replace(emphasisRegex, "$1")
+			if (result !== this.value.text) {
+				this.value.text = result
+			} else {
+				this.value.text = `*${this.value.text}*`
+			}
+			this.$emit('input', this.value)
+		},
 		_toggleBold() {
 			let result = this.value.text.replace(boldRegex, "$1")
 			if (result !== this.value.text) {
@@ -123,6 +145,15 @@ export default {
 				this.value.text = result
 			} else {
 				this.value.text = `__${this.value.text}__`
+			}
+			this.$emit('input', this.value)
+		},
+		_toggleStrikethrough() {
+			let result = this.value.text.replace(strikethroughRegex, "$1")
+			if (result !== this.value.text) {
+				this.value.text = result
+			} else {
+				this.value.text = `~~${this.value.text}~~`
 			}
 			this.$emit('input', this.value)
 		},
