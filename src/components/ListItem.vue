@@ -68,8 +68,8 @@ export default {
 	computed: {
 		formattedText() {
 			return this.value.text
+				.replace(boldRegex, "<b>$1</b>") // must process bold first b/c otherwise italics will take over
 				.replace(emphasisRegex, "<em>$1</em>")
-				.replace(boldRegex, "<b>$1</b>")
 				.replace(underlineRegex, "<u>$1</u>")
 				.replace(strikethroughRegex, "<s>$1</s>")
 		}
