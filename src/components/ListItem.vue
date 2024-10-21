@@ -83,19 +83,23 @@ export default {
 					case 'KeyI':
 						// bold
 						this._toggleEmphasis()
+						event.preventDefault();
 						break;
 					case 'KeyB':
 						// bold
 						this._toggleBold()
+						event.preventDefault();
 						break;
 					case 'KeyU':
 						// underline
 						this._toggleUnderline()
+						event.preventDefault();
 						break;
 					case 'KeyS':
 						// strikethrough (ctrl+shift+s)
 						if (event.shiftKey) {
 							this._toggleStrikethrough()
+							event.preventDefault();
 						}
 				}
 			}
